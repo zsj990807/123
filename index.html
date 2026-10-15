@@ -96,9 +96,9 @@ body{
 @keyframes heartIn{from{opacity:0;transform:scale(.6) rotate(-12deg)}to{opacity:.95;transform:rotate(-8deg)}}
 
 .script-note{
-  position:absolute;right:4px;bottom:26px;width:118px;text-align:center;
-  font-family:var(--script);font-size:17px;line-height:1.06;color:var(--coral);
-  transform:rotate(-3deg);opacity:0;animation:riseIn .9s cubic-bezier(.22,.8,.24,1) .68s forwards;
+  display:block;text-align:right;margin:8px 8px 0 0;
+  font-family:var(--script);font-size:15px;line-height:1.1;color:var(--coral);
+  transform:rotate(-2deg);
 }
 
 /* ---------- 分类 Tab ---------- */
@@ -516,6 +516,7 @@ body{
                   stroke="#DF8757" stroke-width="2" fill="none" stroke-linecap="round"/>
           </svg>
         </span>
+        <div class="script-note">Good Food<br>Brings Us Closer.</div>
       </div>
 
       <svg class="heart-doodle" viewBox="0 0 40 38" fill="none" aria-hidden="true">
@@ -524,7 +525,6 @@ body{
         <path d="M12 12 C 10 14 10 17 11 19" stroke="#DF8757" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>
       </svg>
 
-      <div class="script-note">Good Food<br>Brings Us Closer.</div>
     </header>
 
     <!-- 分类 Tab -->
