@@ -156,6 +156,102 @@ body{
 }
 .bottom-nav button.on{color:var(--olive-deep)}
 .bottom-nav button.on .dot{transform:translateX(-50%) scale(1)}
+
+/* ---------- 菜品详情页 ---------- */
+.detail{
+  position:absolute;inset:0;z-index:20;background:var(--cream);
+  display:flex;flex-direction:column;transform:translateX(100%);
+  transition:transform .38s cubic-bezier(.22,.9,.26,1);
+  box-shadow:-20px 0 44px -26px rgba(46,58,38,.7);
+}
+.detail.open{transform:none}
+.detail-scroll{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding-bottom:10px}
+.detail-scroll::-webkit-scrollbar{display:none}
+
+.d-hero{position:relative;height:clamp(232px,38vh,310px);flex:0 0 auto;background:#EFE8D8}
+.d-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.d-hero .fade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(46,58,38,.24) 0%,rgba(46,58,38,0) 36%)}
+.d-back{
+  position:absolute;top:14px;left:14px;width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;border:0;
+  background:rgba(247,241,228,.88);backdrop-filter:blur(10px);
+  box-shadow:0 4px 14px -8px rgba(46,58,38,.9);
+}
+.d-back:active{transform:scale(.94)}
+.d-back svg{width:18px;height:18px;stroke:var(--ink);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.d-chip{
+  position:absolute;top:19px;right:14px;padding:6px 13px;border-radius:999px;
+  font-size:11.5px;font-weight:600;letter-spacing:.16em;color:#FBF6EA;
+  background:rgba(95,110,73,.88);backdrop-filter:blur(10px);
+}
+
+/* 内容纸张：上移覆盖图片，形成叠压层次 */
+.d-sheet{
+  position:relative;margin-top:-26px;background:var(--cream);
+  border-radius:28px 28px 0 0;padding:22px 20px 8px;
+}
+.d-title{font-family:var(--serif);font-weight:600;color:var(--ink);margin:0;line-height:1.18;
+  font-size:clamp(26px,7.4vw,32px);letter-spacing:.02em}
+.d-sub{font-family:var(--serif);font-size:13.5px;color:var(--muted);margin:9px 0 0;letter-spacing:.03em}
+
+/* 三项信息：无卡片，仅分隔线 */
+.d-facts{display:grid;grid-template-columns:repeat(3,1fr);margin:18px 0 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.d-fact{padding:13px 4px;text-align:center}
+.d-fact + .d-fact{border-left:1px solid var(--line)}
+.d-fact .k{font-size:10.5px;letter-spacing:.2em;color:var(--muted)}
+.d-fact .v{font-size:14.5px;font-weight:600;color:var(--ink-2);margin-top:5px;letter-spacing:.02em}
+
+/* 主厨的话 */
+.d-quote{margin:20px 0 0;padding:2px 0 2px 14px;border-left:2px solid var(--coral);
+  font-family:var(--serif);font-size:14px;line-height:1.62;color:var(--ink-2)}
+.d-quote .who{display:block;margin-top:8px;font-family:var(--sans);
+  font-size:11.5px;letter-spacing:.14em;color:var(--coral)}
+
+/* 区段标题 */
+.d-h{display:flex;align-items:baseline;gap:10px;margin:26px 0 6px}
+.d-h h2{font-size:16px;font-weight:700;color:var(--ink);margin:0;letter-spacing:.08em}
+.d-h span{font-size:10.5px;letter-spacing:.2em;color:var(--muted)}
+
+/* 食材：点线引导 */
+.d-ing{display:flex;align-items:baseline;gap:8px;font-size:14px;color:var(--ink-2);
+  padding:9px 0;border-bottom:1px dashed var(--line)}
+.d-ing:last-child{border-bottom:0}
+.d-ing .dots{flex:1;border-bottom:1px dotted #D9CEB7;transform:translateY(-4px)}
+.d-ing .amt{font-family:var(--serif);font-size:13px;color:var(--muted)}
+
+/* 做法步骤 */
+.d-step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.d-step:last-child{border-bottom:0}
+.d-step .no{flex:0 0 24px;padding-top:1px;font-family:var(--serif);
+  font-size:15px;font-weight:600;color:var(--coral)}
+.d-step p{margin:0;font-family:var(--serif);font-size:14px;line-height:1.6;color:var(--ink-2)}
+
+/* 底部操作条 */
+.d-bar{flex:0 0 auto;display:flex;align-items:center;gap:12px;
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(252,248,239,.96);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.stepper{display:flex;align-items:center;height:44px;padding:0 4px;gap:2px;
+  background:var(--cream-2);border:1px solid var(--line);border-radius:999px}
+.stepper button{width:36px;height:36px;border:0;background:none;cursor:pointer;border-radius:50%;
+  display:grid;place-items:center;font-size:19px;color:var(--olive-deep)}
+.stepper button:active{background:rgba(95,110,73,.12)}
+.stepper .qty{min-width:26px;text-align:center;font-size:15px;font-weight:700;color:var(--ink)}
+.add-btn{
+  flex:1;height:44px;border:0;border-radius:999px;cursor:pointer;
+  background:var(--olive-deep);color:#FBF6EA;font-family:var(--sans);
+  font-size:15px;font-weight:600;letter-spacing:.08em;
+  box-shadow:0 8px 20px -14px rgba(95,110,73,1);
+  transition:transform .14s ease, background .2s ease;
+}
+.add-btn:active{transform:scale(.98);background:#556342}
+
+/* 轻提示 */
+.toast{position:absolute;left:50%;bottom:100px;z-index:40;white-space:nowrap;
+  padding:10px 18px;border-radius:999px;background:rgba(46,58,38,.94);color:#FBF6EA;
+  font-size:13px;letter-spacing:.06em;pointer-events:none;opacity:0;
+  transform:translate(-50%,10px);transition:opacity .26s ease, transform .26s ease}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 </style>
 </head>
 <body>
@@ -238,6 +334,50 @@ body{
 
   </div>
 
+  <!-- 菜品详情页 -->
+  <section class="detail" id="detail" aria-hidden="true">
+    <div class="detail-scroll" id="detailScroll">
+      <div class="d-hero">
+        <img id="dImg" src="" alt="">
+        <div class="fade"></div>
+        <button class="d-back" id="dBack" aria-label="返回">
+          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <span class="d-chip" id="dChip"></span>
+      </div>
+
+      <div class="d-sheet">
+        <h1 class="d-title" id="dTitle"></h1>
+        <p class="d-sub" id="dSub"></p>
+
+        <div class="d-facts">
+          <div class="d-fact"><div class="k">时长</div><div class="v" id="dTime"></div></div>
+          <div class="d-fact"><div class="k">口味</div><div class="v" id="dFlavor"></div></div>
+          <div class="d-fact"><div class="k">分量</div><div class="v" id="dServing"></div></div>
+        </div>
+
+        <p class="d-quote" id="dQuote"></p>
+
+        <div class="d-h"><h2>食材</h2><span>INGREDIENTS</span></div>
+        <div id="dIng"></div>
+
+        <div class="d-h"><h2>做法</h2><span>METHOD</span></div>
+        <div id="dSteps"></div>
+      </div>
+    </div>
+
+    <div class="d-bar">
+      <div class="stepper">
+        <button id="qMinus" aria-label="减少">−</button>
+        <span class="qty" id="qty">1</span>
+        <button id="qPlus" aria-label="增加">+</button>
+      </div>
+      <button class="add-btn" id="addBtn">加入点单</button>
+    </div>
+  </section>
+
+  <div class="toast" id="toast"></div>
+
   <!-- 底部导航 -->
   <nav class="bottom-nav" id="bottomNav">
     <button class="on" data-tab="menu">专属菜单<span class="dot"></span></button>
@@ -256,29 +396,89 @@ const CATS = [
 const DISHES = {
   main:[
     { name:'虾仁滑蛋', desc:'鸡蛋柔嫩，虾仁清甜。', time:'约 15 分钟', tag:'鲜香嫩滑',
-      img:'./assets/dish-shrimp-egg.jpg' },
+      img:'./assets/dish-shrimp-egg.jpg', flavor:'清淡鲜甜', serving:'1-2 人',
+      chef:'「蛋要嫩，铲子就得懒一点——少翻，慢推。」',
+      ing:['鸡蛋|3 枚','鲜虾仁|120 g','小葱|1 根','盐|少许','花生油|1 勺'],
+      steps:['虾仁用盐抓洗后吸干水分，热锅滑油十秒即捞出。',
+             '蛋液加盐打散，倒入留有余温的锅中。',
+             '转小火，铲子从边缘缓慢推向中间，蛋液半凝固时放回虾仁。',
+             '撒葱花，翻两下立刻出锅，全程不超过一分钟。'] },
     { name:'马哥超绝炒鸡公', desc:'超水准的招牌菜不解释', time:'约 30 分钟', tag:'香辣 回味无穷',
-      img:'./assets/dish-chicken.jpg' },
+      img:'./assets/dish-chicken.jpg', flavor:'香辣', serving:'2-3 人',
+      chef:'「这道菜不解释，吃过的都懂。」',
+      ing:['走地公鸡|800 g','干辣椒|20 g','花椒|8 g','大蒜|1 头','姜|1 块','生抽|2 勺'],
+      steps:['鸡斩小块，用料酒和生抽腌十分钟。',
+             '热油炝香干辣椒、花椒、蒜与姜。',
+             '下鸡块生炒至变色，加少量水加盖焖十分钟。',
+             '开大火收汁，收到能挂住勺子为止。'] },
     { name:'薄荷炒花甲', desc:'吮指美味的炒花甲', time:'约 30 分钟', tag:'鲜',
-      img:'./assets/dish-clams.jpg' },
+      img:'./assets/dish-clams.jpg', flavor:'鲜辣', serving:'2 人',
+      chef:'「薄荷是广东人的私心，去腥，还提鲜。」',
+      ing:['花甲|500 g','新鲜薄荷|1 把','小米辣|2 个','蒜末|2 勺','生抽|1 勺'],
+      steps:['花甲用盐水养两小时，让它吐净沙。',
+             '热锅爆香蒜末与小米辣。',
+             '下花甲，加盖焖到全部开口。',
+             '淋生抽，撒薄荷，翻两下出锅。'] },
     { name:'打抛肉末煎豆腐', desc:'一秒回到泰兰德', time:'约 30 分钟', tag:'下饭',
-      img:'./assets/dish-tofu.jpg' }
+      img:'./assets/dish-tofu.jpg', flavor:'咸鲜微辣', serving:'2 人',
+      chef:'「一勺浇在饭上，一秒回到曼谷街头。」',
+      ing:['猪前腿肉末|200 g','老豆腐|1 块','九层塔|1 把','小米辣|2 个','鱼露|1 勺'],
+      steps:['豆腐切厚片，两面煎至金黄盛起。',
+             '肉末炒散，加鱼露与蚝油炒出香。',
+             '放小米辣和九层塔快速翻炒。',
+             '趁热浇在煎好的豆腐上。'] }
   ],
   veg:[
     { name:'蒜蓉西兰花', desc:'脆嫩清甜，蒜香扑鼻。', time:'约 10 分钟', tag:'清爽',
-      img:'./assets/dish-broccoli.jpg' },
+      img:'./assets/dish-broccoli.jpg', flavor:'清爽', serving:'2 人',
+      chef:'「脆，才是蔬菜的礼貌。」',
+      ing:['西兰花|1 颗','大蒜|5 瓣','盐|少许','蚝油|半勺'],
+      steps:['西兰花切小朵，用盐水泡洗。',
+             '沸水焯三十秒，立刻过冷水锁色。',
+             '蒜片小火爆香至微黄。',
+             '下西兰花，加盐和蚝油翻匀即出。'] },
     { name:'手撕包菜', desc:'锅气十足的干锅风味', time:'约 12 分钟', tag:'微辣 下饭',
-      img:'./assets/dish-cabbage.jpg' },
+      img:'./assets/dish-cabbage.jpg', flavor:'微辣', serving:'2 人',
+      chef:'「锅要够热，包菜下去得要有响声。」',
+      ing:['包菜|半颗','腊肉|50 g','干辣椒|4 个','蒜末|1 勺','生抽|1 勺'],
+      steps:['包菜手撕成块，洗净沥干水。',
+             '腊肉切薄片，煸出油。',
+             '下蒜末与干辣椒爆香。',
+             '大火下包菜快炒三十秒，淋生抽。'] },
     { name:'上汤娃娃菜', desc:'汤鲜味美，一口回甘', time:'约 15 分钟', tag:'清甜',
-      img:'./assets/dish-babycabbage.jpg' }
+      img:'./assets/dish-babycabbage.jpg', flavor:'清甜', serving:'2 人',
+      chef:'「汤要好，菜才敢做得这么清淡。」',
+      ing:['娃娃菜|2 颗','皮蛋|1 个','咸蛋|半个','高汤|400 ml','枸杞|少许'],
+      steps:['皮蛋与咸蛋切丁，先煮进高汤里出味。',
+             '娃娃菜纵向剖开，下汤煮三分钟。',
+             '加枸杞再煮一分钟。',
+             '连汤一起装碗，汤别收干。'] }
   ],
   soup:[
     { name:'番茄牛腩汤', desc:'浓郁微酸，暖到胃里。', time:'约 90 分钟', tag:'暖胃',
-      img:'./assets/dish-tomato-beef.jpg' },
+      img:'./assets/dish-tomato-beef.jpg', flavor:'浓郁微酸', serving:'3 人',
+      chef:'「酸要酸得有厚度，靠的是时间。」',
+      ing:['牛腩|500 g','番茄|4 个','洋葱|半个','姜|3 片','盐|适量'],
+      steps:['牛腩焯水，与两个番茄同炖九十分钟。',
+             '剩下两个番茄另起锅炒出沙。',
+             '把牛腩汤倒进番茄沙里，合煮二十分钟。',
+             '加盐调味，起锅前撒葱花。'] },
     { name:'玉米排骨汤', desc:'清甜不腻，慢火细炖', time:'约 60 分钟', tag:'清甜',
-      img:'./assets/dish-corn-rib.jpg' },
+      img:'./assets/dish-corn-rib.jpg', flavor:'清甜', serving:'3 人',
+      chef:'「不勾芡、不重口，就是要喝那口清甜。」',
+      ing:['排骨|500 g','甜玉米|2 根','姜|3 片','枸杞|少许','盐|适量'],
+      steps:['排骨冷水下锅焯去浮沫。',
+             '玉米切段，与排骨、姜片一同下锅。',
+             '转小火慢炖六十分钟，中途不揭盖。',
+             '出锅前放枸杞，只加一点盐。'] },
     { name:'老火例汤', desc:'每日限定，慢炖四小时', time:'约 240 分钟', tag:'慢炖',
-      img:'./assets/dish-cantonese-soup.jpg' }
+      img:'./assets/dish-cantonese-soup.jpg', flavor:'醇厚', serving:'3-4 人',
+      chef:'「例汤没有菜单，只有当天。」',
+      ing:['猪骨|500 g','老鸡|半只','时令药材|1 份','姜|3 片','盐|适量'],
+      steps:['猪骨与老鸡冷水下锅焯透。',
+             '与药材、姜片一同入砂锅，水一次加足。',
+             '小火煲足四小时，全程不揭盖。',
+             '关火后只加一点盐，喝的是原味。'] }
   ]
 };
 
@@ -304,7 +504,7 @@ function movePill(i){
 function renderList(){
   const key = CATS[current].key;
   menuEl.innerHTML = DISHES[key].map((d, i) => `
-    <article class="dish" style="--i:${i}">
+    <article class="dish" style="--i:${i}" data-i="${i}">
       <img class="thumb" src="${d.img}" alt="${d.name}" loading="lazy"
            onerror="this.style.visibility='hidden'">
       <div class="dish-info">
@@ -340,6 +540,78 @@ document.getElementById('bottomNav').addEventListener('click', e => {
 scrollEl.addEventListener('scroll', () => {
   document.getElementById('tabsWrap').classList.toggle('stuck', scrollEl.scrollTop > 8);
 }, { passive:true });
+
+/* ---------------- 菜品详情页 ---------------- */
+const detailEl     = document.getElementById('detail');
+const detailScroll = document.getElementById('detailScroll');
+const dImg    = document.getElementById('dImg');
+const dChip   = document.getElementById('dChip');
+const dTitle  = document.getElementById('dTitle');
+const dSub    = document.getElementById('dSub');
+const dTime   = document.getElementById('dTime');
+const dFlavor = document.getElementById('dFlavor');
+const dServing= document.getElementById('dServing');
+const dQuote  = document.getElementById('dQuote');
+const dIng    = document.getElementById('dIng');
+const dSteps  = document.getElementById('dSteps');
+const qtyEl   = document.getElementById('qty');
+const toastEl = document.getElementById('toast');
+let curDish = null, qty = 1;
+
+function openDetail(catKey, i, catName){
+  const d = DISHES[catKey][i];
+  curDish = d; setQty(1);
+
+  dImg.src = d.img; dImg.alt = d.name;
+  dChip.textContent = catName;
+  dTitle.textContent = d.name;
+  dSub.textContent = d.desc;
+  dTime.textContent = d.time.replace('约 ', '');
+  dFlavor.textContent = d.flavor;
+  dServing.textContent = d.serving;
+  dQuote.innerHTML = `${d.chef}<span class="who">— 你的专属主厨 Pali</span>`;
+  dIng.innerHTML = d.ing.map(s => {
+    const [n, a] = s.split('|');
+    return `<div class="d-ing"><span>${n}</span><span class="dots"></span><span class="amt">${a}</span></div>`;
+  }).join('');
+  dSteps.innerHTML = d.steps.map((s, k) =>
+    `<div class="d-step"><span class="no">${String(k + 1).padStart(2, '0')}</span><p>${s}</p></div>`
+  ).join('');
+
+  detailScroll.scrollTop = 0;
+  detailEl.classList.add('open');
+  detailEl.setAttribute('aria-hidden', 'false');
+}
+
+function closeDetail(){
+  detailEl.classList.remove('open');
+  detailEl.setAttribute('aria-hidden', 'true');
+}
+
+function setQty(n){ qty = Math.max(1, n); qtyEl.textContent = qty; }
+
+let toastTimer = null;
+function toast(msg){
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1800);
+}
+
+/* 点击菜品进入详情 */
+menuEl.addEventListener('click', e => {
+  const art = e.target.closest('.dish');
+  if(!art) return;
+  openDetail(CATS[current].key, Number(art.dataset.i), CATS[current].name);
+});
+
+document.getElementById('dBack').addEventListener('click', closeDetail);
+document.getElementById('qMinus').addEventListener('click', () => setQty(qty - 1));
+document.getElementById('qPlus').addEventListener('click', () => setQty(qty + 1));
+document.getElementById('addBtn').addEventListener('click', () => {
+  if(!curDish) return;
+  toast(`${curDish.name} × ${qty} 已加入点单`);
+});
 
 /* 初始化 */
 movePill(0);
