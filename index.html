@@ -29,7 +29,8 @@ body{
 }
 .phone{
   position:relative;width:min(430px,100vw);height:100vh;height:100dvh;
-  background:var(--cream);display:flex;flex-direction:column;overflow:hidden;
+  background:var(--cream);display:flex;flex-direction:column;
+  overflow:hidden;overflow:clip;overflow-clip-margin:0;
 }
 @media (min-width:560px){
   .phone{height:min(900px,94vh);border-radius:40px;box-shadow:0 34px 90px rgba(46,58,38,.28),0 2px 0 rgba(255,255,255,.6) inset}
@@ -246,6 +247,68 @@ body{
 }
 .add-btn:active{transform:scale(.98);background:#556342}
 
+/* ---------- 我的点单页 ---------- */
+.o-head{padding:30px 20px 0}
+.o-eyebrow{font-size:10.5px;letter-spacing:.30em;color:var(--muted);margin:0;font-weight:500}
+.o-title{font-family:var(--serif);font-weight:600;color:var(--ink);letter-spacing:.02em;
+  font-size:clamp(30px,8.6vw,38px);line-height:1.1;margin:12px 0 0}
+.o-tag{font-family:var(--serif);font-size:14px;color:var(--muted);margin:10px 0 0;letter-spacing:.03em}
+.o-body{padding:0 20px 8px}
+.o-facts{margin-top:20px}
+
+/* 已点菜品行 */
+.o-row{display:flex;gap:13px;align-items:flex-start;padding:15px 0;border-top:1px solid var(--line)}
+.o-row:first-child{border-top:0}
+.o-thumb{flex:0 0 78px;width:78px;height:60px;border-radius:8px;object-fit:cover;background:#EFE8D8}
+.o-info{flex:1;min-width:0}
+.o-name{font-size:17px;font-weight:700;color:var(--ink);margin:2px 0 0;line-height:1.25;letter-spacing:.02em}
+.o-meta{font-family:var(--serif);font-size:12.5px;color:var(--muted);margin:6px 0 0;letter-spacing:.02em}
+.o-ctrl{display:flex;flex-direction:column;align-items:flex-end;gap:7px}
+.mini{display:flex;align-items:center;height:32px;padding:0 3px;gap:1px;
+  background:var(--cream-2);border:1px solid var(--line);border-radius:999px}
+.mini button{width:26px;height:26px;border:0;background:none;border-radius:50%;cursor:pointer;
+  display:grid;place-items:center;font-size:15px;color:var(--olive-deep)}
+.mini button:active{background:rgba(95,110,73,.12)}
+.mini .q{min-width:20px;text-align:center;font-size:13.5px;font-weight:700;color:var(--ink)}
+.o-del{border:0;background:none;cursor:pointer;padding:0;font-family:var(--sans);
+  font-size:11.5px;letter-spacing:.1em;color:var(--muted);
+  text-decoration:underline;text-underline-offset:3px;text-decoration-color:#D9CEB7}
+.o-del:active{color:var(--coral)}
+
+/* 备注 */
+.o-note textarea{
+  width:100%;border:1px solid var(--line);border-radius:14px;background:var(--cream-2);
+  padding:13px 14px;outline:none;resize:none;color:var(--ink-2);
+  font-family:var(--serif);font-size:13.5px;line-height:1.55;letter-spacing:.02em;
+}
+.o-note textarea::placeholder{color:#B9B0A0}
+.o-note textarea:focus{border-color:#CBBFA6}
+
+/* 提交 */
+.o-submit{margin-top:26px}
+.o-submit .add-btn{width:100%}
+.o-hint{margin:12px 0 0;text-align:center;font-size:11.5px;letter-spacing:.1em;color:var(--muted)}
+
+/* 空状态 */
+.o-empty{padding:34px 24px 40px;text-align:center}
+.o-empty svg{width:76px;height:auto;opacity:.95}
+.o-empty h2{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);margin:18px 0 0}
+.o-empty p{font-family:var(--serif);font-size:13.5px;color:var(--muted);margin:9px 0 0}
+.o-empty button{margin-top:24px;height:44px;padding:0 30px;border:0;border-radius:999px;cursor:pointer;
+  background:var(--olive-deep);color:#FBF6EA;font-family:var(--sans);
+  font-size:14.5px;font-weight:600;letter-spacing:.08em}
+.o-empty button:active{background:#556342}
+
+/* 底部导航角标 */
+.bottom-nav button .badge{
+  position:absolute;top:10px;left:calc(50% + 32px);
+  min-width:17px;height:17px;padding:0 5px;border-radius:999px;
+  background:var(--coral);color:#fff;font-size:11px;font-weight:700;letter-spacing:0;
+  display:grid;place-items:center;transform:scale(0);
+  transition:transform .28s cubic-bezier(.22,.9,.26,1);
+}
+.bottom-nav button .badge.show{transform:scale(1)}
+
 /* 轻提示 */
 .toast{position:absolute;left:50%;bottom:100px;z-index:40;white-space:nowrap;
   padding:10px 18px;border-radius:999px;background:rgba(46,58,38,.94);color:#FBF6EA;
@@ -334,6 +397,56 @@ body{
 
   </div>
 
+  <!-- 我的点单页 -->
+  <div class="scroll" id="orderView" hidden>
+    <header class="o-head">
+      <p class="o-eyebrow">One Guest · My Order</p>
+      <h1 class="o-title">我的点单</h1>
+      <p class="o-tag">今天为你安排的一餐。</p>
+    </header>
+
+    <div class="o-body" id="oBody">
+      <div class="d-facts o-facts">
+        <div class="d-fact"><div class="k">菜数</div><div class="v" id="oCount">0 道</div></div>
+        <div class="d-fact"><div class="k">总份数</div><div class="v" id="oQty">0 份</div></div>
+        <div class="d-fact"><div class="k">预计出餐</div><div class="v" id="oEta">—</div></div>
+      </div>
+
+      <div id="oList"></div>
+
+      <div class="d-h"><h2>给主厨的话</h2><span>NOTE</span></div>
+      <div class="o-note">
+        <textarea id="oNote" rows="3" placeholder="忌口、辣度、上菜顺序……"></textarea>
+      </div>
+
+      <div class="o-submit">
+        <button class="add-btn" id="submitBtn">提交给主厨</button>
+      </div>
+      <p class="o-hint">主厨确认后会第一时间回复你</p>
+    </div>
+
+    <div class="o-empty" id="oEmpty" hidden>
+      <svg viewBox="0 0 110 150" fill="none" aria-hidden="true">
+        <path d="M8 146 C 30 124 46 98 60 70 C 70 50 80 32 96 14" stroke="#93A177" stroke-width="1.8" stroke-linecap="round"/>
+        <g fill="#7C8C63">
+          <ellipse cx="18" cy="128" rx="5" ry="15" transform="rotate(-50 18 128)"/>
+          <ellipse cx="32" cy="132" rx="5" ry="15" transform="rotate(20 32 132)"/>
+          <ellipse cx="32" cy="108" rx="5" ry="15" transform="rotate(-50 32 108)"/>
+          <ellipse cx="46" cy="112" rx="5" ry="15" transform="rotate(20 46 112)"/>
+          <ellipse cx="46" cy="86" rx="5" ry="15" transform="rotate(-48 46 86)"/>
+          <ellipse cx="60" cy="90" rx="5" ry="15" transform="rotate(22 60 90)"/>
+          <ellipse cx="58" cy="64" rx="5" ry="15" transform="rotate(-46 58 64)"/>
+          <ellipse cx="72" cy="68" rx="5" ry="15" transform="rotate(24 72 68)"/>
+          <ellipse cx="72" cy="44" rx="5" ry="15" transform="rotate(-44 72 44)"/>
+          <ellipse cx="84" cy="48" rx="5" ry="15" transform="rotate(26 84 48)"/>
+        </g>
+      </svg>
+      <h2>还没有点菜</h2>
+      <p>去菜单挑几道今天的菜吧</p>
+      <button id="goMenu">去看菜单</button>
+    </div>
+  </div>
+
   <!-- 菜品详情页 -->
   <section class="detail" id="detail" aria-hidden="true">
     <div class="detail-scroll" id="detailScroll">
@@ -381,7 +494,7 @@ body{
   <!-- 底部导航 -->
   <nav class="bottom-nav" id="bottomNav">
     <button class="on" data-tab="menu">专属菜单<span class="dot"></span></button>
-    <button data-tab="order">我的点单<span class="dot"></span></button>
+    <button data-tab="order">我的点单<span class="badge" id="oBadge"></span><span class="dot"></span></button>
   </nav>
 </div>
 
@@ -534,6 +647,7 @@ document.getElementById('bottomNav').addEventListener('click', e => {
   if(!btn) return;
   [...e.currentTarget.querySelectorAll('button')].forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
+  showView(btn.dataset.tab === 'order' ? 'order' : 'menu');
 });
 
 /* Tab 栏吸顶阴影 */
@@ -556,11 +670,12 @@ const dIng    = document.getElementById('dIng');
 const dSteps  = document.getElementById('dSteps');
 const qtyEl   = document.getElementById('qty');
 const toastEl = document.getElementById('toast');
-let curDish = null, qty = 1;
+let curDish = null, qty = 1, curKey = null, curIdx = 0, curCatName = '';
 
 function openDetail(catKey, i, catName){
   const d = DISHES[catKey][i];
-  curDish = d; setQty(1);
+  curDish = d; curKey = catKey; curIdx = i; curCatName = catName;
+  setQty(1);
 
   dImg.src = d.img; dImg.alt = d.name;
   dChip.textContent = catName;
@@ -610,12 +725,105 @@ document.getElementById('qMinus').addEventListener('click', () => setQty(qty - 1
 document.getElementById('qPlus').addEventListener('click', () => setQty(qty + 1));
 document.getElementById('addBtn').addEventListener('click', () => {
   if(!curDish) return;
+  addToOrder(curKey, curIdx, curCatName, qty);
   toast(`${curDish.name} × ${qty} 已加入点单`);
+});
+
+/* ---------------- 我的点单 ---------------- */
+const menuView  = document.getElementById('scroll');
+const orderView = document.getElementById('orderView');
+const oBody   = document.getElementById('oBody');
+const oEmpty  = document.getElementById('oEmpty');
+const oList   = document.getElementById('oList');
+const oCount  = document.getElementById('oCount');
+const oQty    = document.getElementById('oQty');
+const oEta    = document.getElementById('oEta');
+const oBadge  = document.getElementById('oBadge');
+let order = [];   // [{ id, dish, catName, qty }]
+
+const minutesOf = t => parseInt(t.replace(/[^0-9]/g, ''), 10) || 0;
+function fmtMinutes(m){
+  if(m <= 0) return '—';
+  if(m < 60) return `${m} 分钟`;
+  const h = Math.floor(m / 60), r = m % 60;
+  return r ? `${h} 小时 ${r} 分` : `${h} 小时`;
+}
+
+/* 各分类切换（菜单页 / 点单页） */
+function showView(v){
+  menuView.hidden  = v !== 'menu';
+  orderView.hidden = v !== 'order';
+  if(v === 'order') orderView.scrollTop = 0;
+}
+
+function addToOrder(catKey, i, catName, n){
+  const id = `${catKey}:${i}`;
+  const hit = order.find(o => o.id === id);
+  if(hit) hit.qty += n;
+  else order.push({ id, dish: DISHES[catKey][i], catName, qty: n });
+  renderOrder();
+}
+
+function renderOrder(){
+  const qtySum = order.reduce((s, o) => s + o.qty, 0);
+  const eta    = order.length ? Math.max(...order.map(o => minutesOf(o.dish.time))) : 0;
+
+  oCount.textContent = `${order.length} 道`;
+  oQty.textContent   = `${qtySum} 份`;
+  oEta.textContent   = fmtMinutes(eta);
+
+  oList.innerHTML = order.map(o => `
+    <div class="o-row" data-id="${o.id}">
+      <img class="o-thumb" src="${o.dish.img}" alt="${o.dish.name}" onerror="this.style.visibility='hidden'">
+      <div class="o-info">
+        <h3 class="o-name">${o.dish.name}</h3>
+        <p class="o-meta">${o.catName} · ${o.dish.flavor} · ${o.dish.time.replace('约 ', '')}</p>
+      </div>
+      <div class="o-ctrl">
+        <div class="mini">
+          <button data-act="dec" aria-label="减少">−</button>
+          <span class="q">${o.qty}</span>
+          <button data-act="inc" aria-label="增加">+</button>
+        </div>
+        <button class="o-del" data-act="del">移除</button>
+      </div>
+    </div>`).join('');
+
+  const empty = order.length === 0;
+  oBody.hidden  = empty;
+  oEmpty.hidden = !empty;
+
+  oBadge.textContent = qtySum;
+  oBadge.classList.toggle('show', qtySum > 0);
+}
+
+oList.addEventListener('click', e => {
+  const act = e.target.closest('[data-act]');
+  if(!act) return;
+  const id = act.closest('.o-row').dataset.id;
+  const it = order.find(o => o.id === id);
+  if(!it) return;
+
+  if(act.dataset.act === 'inc') it.qty += 1;
+  if(act.dataset.act === 'dec') it.qty = Math.max(1, it.qty - 1);
+  if(act.dataset.act === 'del') order = order.filter(o => o.id !== id);
+  renderOrder();
+});
+
+document.getElementById('submitBtn').addEventListener('click', () => {
+  if(!order.length) return;
+  const qtySum = order.reduce((s, o) => s + o.qty, 0);
+  toast(`已提交 ${order.length} 道菜 · 共 ${qtySum} 份`);
+});
+
+document.getElementById('goMenu').addEventListener('click', () => {
+  document.querySelector('.bottom-nav button[data-tab="menu"]').click();
 });
 
 /* 初始化 */
 movePill(0);
 renderList();
+renderOrder();
 </script>
 </body>
 </html>
