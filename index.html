@@ -287,6 +287,11 @@ body{
 .d-bar{flex:0 0 auto;display:flex;align-items:center;gap:12px;
   padding:12px 16px calc(12px + env(safe-area-inset-bottom));
   background:var(--paper-2);border-top:1.6px solid var(--ink)}
+.d-edit{flex:0 0 46px;width:46px;height:46px;cursor:pointer;
+  border:1.6px solid var(--ink);background:var(--paper-2);color:var(--ink);
+  border-radius:var(--wob-sm);display:grid;place-items:center;
+  transition:background .18s ease}
+.d-edit:active{background:var(--tape)}
 .stepper{display:flex;align-items:center;height:46px;padding:0 4px;gap:2px;
   background:var(--paper-2);border:1.5px solid var(--ink);border-radius:var(--wob-sm)}
 .stepper button{width:38px;height:38px;border:0;background:none;cursor:pointer;border-radius:50%;
@@ -655,10 +660,6 @@ body{
       <div class="d-hero">
         <img id="dImg" src="" alt="">
         <div class="fade"></div>
-        <button class="d-back" id="dBack" aria-label="返回">
-          <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
-        </button>
-        <span class="d-chip" id="dChip"></span>
       </div>
 
       <div class="d-sheet">
@@ -681,7 +682,18 @@ body{
       </div>
     </div>
 
+    <button class="d-back" id="dBack" aria-label="返回">
+      <svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <span class="d-chip" id="dChip"></span>
+
     <div class="d-bar">
+      <button class="d-edit" id="dEdit" aria-label="编辑菜品" title="编辑菜品">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+        </svg>
+      </button>
       <div class="stepper">
         <button id="qMinus" aria-label="减少">−</button>
         <span class="qty" id="qty">1</span>
@@ -925,6 +937,7 @@ menuEl.addEventListener('click', e => {
 });
 
 document.getElementById('dBack').addEventListener('click', closeDetail);
+document.getElementById('dEdit').addEventListener('click', startEdit);
 document.getElementById('qMinus').addEventListener('click', () => setQty(qty - 1));
 document.getElementById('qPlus').addEventListener('click', () => setQty(qty + 1));
 document.getElementById('addBtn').addEventListener('click', () => {
@@ -960,6 +973,8 @@ function showView(v){
   addView.hidden   = v !== 'add';
   if(v === 'order') orderView.scrollTop = 0;
   if(v === 'add')   addView.scrollTop = 0;
+  /* 从底部导航进入添加页时重置为新增模式；编辑模式由 startEdit 回填，不重置 */
+  if(v === 'add' && !editing) resetAddForm();
 }
 
 /* 底部导航切页 */
@@ -1066,6 +1081,7 @@ const PH = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
    </svg>`);
 
 let aCat = 'main', aImgData = '';
+let editing = null;   // 编辑模式：{ catKey, idx }，null 表示新增
 
 /* 本地保存，刷新后仍保留 */
 const STORE = 'ning.userDishes';
@@ -1144,7 +1160,61 @@ aSteps.addEventListener('click', e => {
 document.getElementById('aAddIng').addEventListener('click', () => ingRow());
 document.getElementById('aAddStep').addEventListener('click', () => stepRow());
 
+function setAddMode(mode){
+  const title = document.querySelector('.a-title');
+  const sub   = document.querySelector('.a-sub');
+  const save  = document.getElementById('aSave');
+  if(mode === 'edit'){
+    title.textContent = '编辑菜品';
+    sub.textContent   = '改完保存，菜单立刻更新。';
+    save.textContent  = '保存修改';
+  }else{
+    title.textContent = '添加菜品';
+    sub.textContent   = '想吃什么写进来，主厨照着做。';
+    save.textContent  = '保存到菜单';
+  }
+}
+
+/* 从当前菜品回填表单，进入编辑模式 */
+function startEdit(){
+  if(!curDish) return;
+  editing = { catKey: curKey, idx: curIdx };
+  setAddMode('edit');
+
+  aName.value   = curDish.name;
+  aDesc.value   = curDish.desc;
+  aFlavor.value = curDish.flavor;
+  aServing.value= curDish.serving;
+  aTime.value   = (parseInt(curDish.time.replace(/[^0-9]/g, ''), 10) || 30);
+  aChef.value   = curDish.chef.replace(/^[「『"']|[」』"']$/g, '');
+  aCat = curKey;
+  [...aSeg.children].forEach(b => b.classList.toggle('on', b.dataset.cat === curKey));
+
+  if(curDish.img && curDish.img !== PH){
+    aImgData = curDish.img;
+    aImg.src = aImgData; aImg.hidden = false; aPh.hidden = true;
+  }else{
+    aImgData = ''; aImg.removeAttribute('src'); aImg.hidden = true; aPh.hidden = false;
+  }
+
+  aIng.innerHTML = '';
+  (curDish.ing || []).forEach(s => {
+    const [n, a] = s.split('|');
+    ingRow(n || '', a || '');
+  });
+  if(!curDish.ing || !curDish.ing.length) ingRow();
+
+  aSteps.innerHTML = '';
+  (curDish.steps || []).forEach(t => stepRow(t));
+  if(!curDish.steps || !curDish.steps.length) stepRow();
+
+  closeDetail();
+  switchTab('add');
+}
+
 function resetAddForm(){
+  editing = null;
+  setAddMode('add');
   aName.value = aDesc.value = aFlavor.value = aServing.value = aTime.value = aChef.value = '';
   aImgData = ''; aFile.value = '';
   aImg.removeAttribute('src'); aImg.hidden = true; aPh.hidden = false;
@@ -1177,15 +1247,41 @@ document.getElementById('aSave').addEventListener('click', () => {
     steps: [...aSteps.querySelectorAll('.f-step textarea')].map(t => t.value.trim()).filter(Boolean)
   };
 
-  DISHES[aCat].push(dish);
-  (userDishes[aCat] = userDishes[aCat] || []).push(dish);
-  saveUserDishes();
+  if(editing){
+    /* 编辑：原地替换，若改了分类则从旧分类移除、加到新分类 */
+    const { catKey: oldKey, idx: oldIdx } = editing;
+    if(oldKey === aCat){
+      /* 原地改，保留对象引用 → 点单页里的同道菜也跟着更新 */
+      Object.assign(DISHES[aCat][oldIdx], dish);
+      if(userDishes[aCat] && userDishes[aCat][oldIdx]){
+        Object.assign(userDishes[aCat][oldIdx], dish);
+      }
+    }else{
+      DISHES[oldKey].splice(oldIdx, 1);
+      if(userDishes[oldKey] && oldIdx < userDishes[oldKey].length){
+        userDishes[oldKey].splice(oldIdx, 1);
+      }
+      DISHES[aCat].push(dish);
+      (userDishes[aCat] = userDishes[aCat] || []).push(dish);
+    }
+    saveUserDishes();
 
-  const idx = CATS.findIndex(c => c.key === aCat);
-  selectCat(idx);
-  switchTab('menu');
-  resetAddForm();
-  toast(`「${name}」已加入${CATS[idx].name}`);
+    const idx = CATS.findIndex(c => c.key === aCat);
+    selectCat(idx);
+    switchTab('menu');
+    resetAddForm();
+    toast(`「${name}」已更新`);
+  }else{
+    DISHES[aCat].push(dish);
+    (userDishes[aCat] = userDishes[aCat] || []).push(dish);
+    saveUserDishes();
+
+    const idx = CATS.findIndex(c => c.key === aCat);
+    selectCat(idx);
+    switchTab('menu');
+    resetAddForm();
+    toast(`「${name}」已加入${CATS[idx].name}`);
+  }
 });
 
 document.getElementById('aCancel').addEventListener('click', () => {
