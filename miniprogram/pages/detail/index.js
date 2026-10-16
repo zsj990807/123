@@ -1,10 +1,12 @@
 const repo = require('../../utils/repo')
+const store = require('../../utils/store')
 
 Page({
   data: {
     id: '',
     dish: null,
-    loading: true
+    loading: true,
+    qty: 1
   },
 
   async onLoad(query) {
@@ -16,5 +18,22 @@ Page({
     if (dish) {
       wx.setNavigationBarTitle({ title: dish.name })
     }
+  },
+
+  incQty() {
+    this.setData({ qty: Math.min(this.data.qty + 1, 99) })
+  },
+
+  decQty() {
+    this.setData({ qty: Math.max(this.data.qty - 1, 1) })
+  },
+
+  addToOrder() {
+    const dish = this.data.dish
+    if (!dish) return
+    const qty = this.data.qty
+    store.addItem(dish, qty)
+    wx.showToast({ title: `已加入点单 ×${qty}`, icon: 'none' })
+    this.setData({ qty: 1 })
   }
 })

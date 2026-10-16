@@ -6,11 +6,13 @@
   </block>
 
   <block wx:elif="{{dish}}">
+    <!-- 大图拍立得 -->
     <view class="detail-img polaroid">
       <view class="tape"></view>
       <image class="big" src="{{dish.img}}" mode="aspectFill" />
     </view>
 
+    <!-- 标题区 -->
     <view class="head">
       <text class="name">{{dish.name}}</text>
       <text class="desc">{{dish.desc}}</text>
@@ -21,14 +23,49 @@
       </view>
     </view>
 
-    <view class="stub">
-      <text class="stub-title">详情页建设中</text>
-      <text class="stub-desc">便利贴主厨寄语、食材清单、红笔编号步骤将在 P2 补齐</text>
+    <!-- 主厨寄语 · 便利贴 -->
+    <view class="chef-note" wx:if="{{dish.chef}}">
+      <view class="tape-note"></view>
+      <text class="chef-label">主厨的话</text>
+      <text class="chef-quote">{{dish.chef}}</text>
+    </view>
+
+    <!-- 食材清单 -->
+    <view class="section" wx:if="{{dish.ingredients.length}}">
+      <view class="section-title">食材</view>
+      <view class="ingredients">
+        <view class="ing-row" wx:for="{{dish.ingredients}}" wx:key="name">
+          <text class="ing-name">{{item.name}}</text>
+          <view class="ing-dots"></view>
+          <text class="ing-amount">{{item.amount}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 做法步骤 -->
+    <view class="section" wx:if="{{dish.steps.length}}">
+      <view class="section-title">做法</view>
+      <view class="steps">
+        <view class="step" wx:for="{{dish.steps}}" wx:key="*this">
+          <view class="step-num">{{index + 1}}</view>
+          <text class="step-text">{{item}}</text>
+        </view>
+      </view>
     </view>
   </block>
 
   <view wx:else class="stub">
     <text class="stub-title">没有找到这道菜</text>
     <text class="stub-desc">请从菜单重新进入</text>
+  </view>
+
+  <!-- 底部加单栏 -->
+  <view class="action-bar" wx:if="{{dish}}">
+    <view class="stepper">
+      <view class="stepper-btn" bindtap="decQty">−</view>
+      <text class="qty">{{qty}}</text>
+      <view class="stepper-btn" bindtap="incQty">+</view>
+    </view>
+    <view class="add-btn" bindtap="addToOrder">加入点单</view>
   </view>
 </view>
