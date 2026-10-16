@@ -2,7 +2,7 @@
   "description": "Ning's Menu · 私厨菜单小程序",
   "miniprogramRoot": "./",
   "compileType": "miniprogram",
-  "appid": "touristappid",
+  "appid": "wxd946608a4c2b01c2",
   "projectname": "nings-menu",
   "setting": {
     "urlCheck": false,
