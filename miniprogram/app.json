@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/menu/index",
+    "pages/order/index",
+    "pages/dishEdit/index",
+    "pages/detail/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FBF6E8",
+    "navigationBarTitleText": "Ning's Menu",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FBF6E8"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#8B8578",
+    "selectedColor": "#5E6F4B",
+    "backgroundColor": "#FFFDF7",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/menu/index", "text": "专属菜单" },
+      { "pagePath": "pages/order/index", "text": "我的点单" },
+      { "pagePath": "pages/dishEdit/index", "text": "添加菜品" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,17 @@
+{
+  "description": "Ning's Menu · 私厨菜单小程序",
+  "miniprogramRoot": "./",
+  "compileType": "miniprogram",
+  "appid": "touristappid",
+  "projectname": "nings-menu",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "ignoreUploadUnusedFiles": true,
+    "packNpmManually": false
+  },
+  "condition": {}
+}

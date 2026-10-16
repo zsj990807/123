@@ -1,0 +1,6 @@
+<view class="page">
+  <view class="stub">
+    <text class="stub-title">添加 / 编辑菜品</text>
+    <text class="stub-desc">表单、动态食材与步骤行、图片上传将在 P4 实现</text>
+  </view>
+</view>

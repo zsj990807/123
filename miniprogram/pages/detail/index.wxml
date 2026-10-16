@@ -1,0 +1,28 @@
+<view class="page">
+  <block wx:if="{{dish}}">
+    <view class="detail-img polaroid">
+      <view class="tape"></view>
+      <image class="big" src="{{dish.img}}" mode="aspectFill" />
+    </view>
+
+    <view class="head">
+      <text class="name">{{dish.name}}</text>
+      <text class="desc">{{dish.desc}}</text>
+      <view class="meta">
+        <text class="time">{{dish.time}}</text>
+        <text class="serving">{{dish.serving}}</text>
+        <text class="flavor">{{dish.flavor}}</text>
+      </view>
+    </view>
+
+    <view class="stub">
+      <text class="stub-title">详情页建设中</text>
+      <text class="stub-desc">便利贴主厨寄语、食材清单、红笔编号步骤将在 P2 补齐</text>
+    </view>
+  </block>
+
+  <view wx:else class="stub">
+    <text class="stub-title">没有找到这道菜</text>
+    <text class="stub-desc">请从菜单重新进入</text>
+  </view>
+</view>

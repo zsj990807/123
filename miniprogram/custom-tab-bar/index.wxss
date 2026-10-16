@@ -1,0 +1,50 @@
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  align-items: stretch;
+  height: 110rpx;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--paper-2, #FFFDF7);
+  border-top: 1px solid var(--line, #DCD1B8);
+  box-shadow: 0 -4rpx 16rpx rgba(90, 80, 55, 0.08);
+}
+
+.tab {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.label {
+  font-family: var(--hand, "Hannotate SC", "Kaiti SC", serif);
+  font-size: 26rpx;
+  color: var(--muted, #8B8578);
+}
+
+/* 红笔划出的选中标记 */
+.mark {
+  position: absolute;
+  top: 14rpx;
+  left: 50%;
+  width: 64rpx;
+  height: 6rpx;
+  margin-left: -32rpx;
+  border-radius: 6rpx;
+  background: transparent;
+  transform: rotate(-1.5deg);
+}
+
+.tab.on .label {
+  color: var(--olive-deep, #5E6F4B);
+  font-weight: 600;
+}
+
+.tab.on .mark {
+  background: var(--coral, #C2543F);
+}

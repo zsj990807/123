@@ -1,0 +1,45 @@
+<view class="page">
+  <!-- 品牌区：纸张顶部用两片纸胶带贴住 -->
+  <view class="hero">
+    <text class="brand-title script-en">Ning's Menu</text>
+    <text class="brand-sub script-en">Good Food · Brings Us Closer</text>
+    <view class="tagline-wrap">
+      <text class="tagline">今天吃什么，听你的。</text>
+      <view class="squiggle"></view>
+    </view>
+    <text class="script-note script-en">Good Food / Brings Us Closer.</text>
+  </view>
+
+  <!-- 分类 -->
+  <view class="tabs">
+    <view
+      wx:for="{{cats}}"
+      wx:key="key"
+      class="tab-item {{current === index ? 'on' : ''}}"
+      data-index="{{index}}"
+      bindtap="selectCat"
+    >{{item.name}}</view>
+  </view>
+
+  <!-- 菜品列表：拍立得卡片 -->
+  <view class="list">
+    <view
+      wx:for="{{list}}"
+      wx:key="id"
+      class="polaroid card {{item.tilt}}"
+      data-index="{{index}}"
+      bindtap="openDetail"
+    >
+      <view class="tape"></view>
+      <image class="thumb" src="{{item.img}}" mode="aspectFill" lazy-load />
+      <view class="caption">
+        <text class="dish-name">{{item.name}}</text>
+        <text class="dish-desc">{{item.desc}}</text>
+        <view class="meta">
+          <text class="time">{{item.time}}</text>
+          <text class="tag">{{item.tag}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

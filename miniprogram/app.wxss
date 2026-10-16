@@ -1,0 +1,97 @@
+/* ============================================================
+   Ning's Menu · 全局设计系统（手写食谱风）
+   设计稿基准：750rpx（原 HTML 原型 430px 等比换算，系数 ≈1.744）
+   ============================================================ */
+
+page {
+  /* 纸张与网格 */
+  --paper: #FBF6E8;
+  --paper-2: #FFFDF7;
+  --grid: rgba(122, 155, 176, 0.19);
+  --tape: rgba(230, 209, 157, 0.62);
+
+  /* 墨色 */
+  --ink: #333B46;
+  --ink-2: #4C565F;
+  --olive: #95A17F;
+  --olive-deep: #5E6F4B;
+  --coral: #C2543F;
+  --muted: #8B8578;
+  --line: #DCD1B8;
+
+  /* 手写体（iOS 系统字体，无需外部加载） */
+  --hand: "Hannotate SC", "Kaiti SC", "STKaiti", "KaiTi", serif;
+  --hand-en: "Snell Roundhand", "Bradley Hand", "Segoe Script", cursive;
+
+  /* 手绘边框 */
+  --wob: 255px 14px 225px 14px / 14px 225px 14px 255px;
+
+  min-height: 100%;
+  background-color: var(--paper);
+  background-image:
+    repeating-linear-gradient(0deg, var(--grid) 0 1px, transparent 1px 37rpx),
+    repeating-linear-gradient(90deg, var(--grid) 0 1px, transparent 1px 37rpx);
+  font-family: var(--hand);
+  color: var(--ink);
+  font-size: 30rpx;
+}
+
+/* 页面容器：给自定义 tabBar 留出高度 */
+.page {
+  min-height: 100vh;
+  padding-bottom: 160rpx;
+  box-sizing: border-box;
+}
+
+/* ---------- 纸胶带装饰 ---------- */
+.tape {
+  position: absolute;
+  top: -12rpx;
+  left: 50%;
+  width: 110rpx;
+  height: 30rpx;
+  margin-left: -55rpx;
+  background: var(--tape);
+  transform: rotate(-3deg);
+  box-shadow: 0 2rpx 6rpx rgba(90, 80, 55, 0.18);
+  z-index: 2;
+}
+
+/* ---------- 拍立得相纸 ---------- */
+.polaroid {
+  position: relative;
+  background: var(--paper-2);
+  padding: 20rpx 20rpx 26rpx;
+  border-radius: 8rpx;
+  box-shadow: 0 6rpx 20rpx rgba(90, 80, 55, 0.16);
+}
+
+.polaroid.tilt-l { transform: rotate(-1.1deg); }
+.polaroid.tilt-r { transform: rotate(1.1deg); }
+
+/* ---------- 通用文字 ---------- */
+.script-en {
+  font-family: var(--hand-en);
+  font-weight: 600;
+}
+
+.muted { color: var(--muted); }
+
+/* ---------- 占位页 ---------- */
+.stub {
+  padding: 120rpx 48rpx 0;
+  text-align: center;
+}
+
+.stub .stub-title {
+  display: block;
+  font-size: 40rpx;
+  color: var(--ink);
+}
+
+.stub .stub-desc {
+  display: block;
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: var(--muted);
+}
