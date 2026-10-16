@@ -14,7 +14,10 @@
 
     <!-- 标题区 -->
     <view class="head">
-      <text class="name">{{dish.name}}</text>
+      <view class="name-row">
+        <text class="name">{{dish.name}}</text>
+        <text class="edit-link" bindtap="goEdit">编辑</text>
+      </view>
       <text class="desc">{{dish.desc}}</text>
       <view class="meta">
         <text class="time">{{dish.time}}</text>

@@ -21,6 +21,20 @@
   color: var(--ink);
 }
 
+.name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-link {
+  font-size: 26rpx;
+  color: var(--coral);
+  border-bottom: 2rpx dashed var(--coral);
+  padding-bottom: 2rpx;
+  flex-shrink: 0;
+}
+
 .head .desc {
   display: block;
   margin-top: 14rpx;

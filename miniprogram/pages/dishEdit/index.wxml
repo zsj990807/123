@@ -1,6 +1,95 @@
 <view class="page">
-  <view class="stub">
-    <text class="stub-title">添加 / 编辑菜品</text>
-    <text class="stub-desc">表单、动态食材与步骤行、图片上传将在 P4 实现</text>
+  <view class="form">
+    <!-- 图片 -->
+    <view class="img-picker" bindtap="chooseImage">
+      <image wx:if="{{imgUrl}}" class="dish-img" src="{{imgUrl}}" mode="aspectFill" />
+      <view wx:else class="img-placeholder">
+        <text class="plus">+</text>
+        <text class="img-tip">点击上传菜品图</text>
+      </view>
+    </view>
+
+    <!-- 基本信息 -->
+    <view class="field">
+      <text class="label">菜名 *</text>
+      <input class="input" placeholder="例如：虾仁滑蛋" value="{{name}}" data-field="name" bindinput="onFieldInput" />
+    </view>
+
+    <view class="field">
+      <text class="label">一句话描述</text>
+      <input class="input" placeholder="例如：鸡蛋柔嫩，虾仁清甜" value="{{desc}}" data-field="desc" bindinput="onFieldInput" />
+    </view>
+
+    <view class="row">
+      <view class="field half">
+        <text class="label">用时</text>
+        <input class="input" placeholder="约 15 分钟" value="{{time}}" data-field="time" bindinput="onFieldInput" />
+      </view>
+      <view class="field half">
+        <text class="label">分钟数</text>
+        <input class="input" type="number" placeholder="15" value="{{minutes}}" data-field="minutes" bindinput="onFieldInput" />
+      </view>
+    </view>
+
+    <view class="row">
+      <view class="field half">
+        <text class="label">标签</text>
+        <input class="input" placeholder="鲜香嫩滑" value="{{tag}}" data-field="tag" bindinput="onFieldInput" />
+      </view>
+      <view class="field half">
+        <text class="label">口味</text>
+        <input class="input" placeholder="清淡鲜甜" value="{{flavor}}" data-field="flavor" bindinput="onFieldInput" />
+      </view>
+    </view>
+
+    <view class="row">
+      <view class="field half">
+        <text class="label">分量</text>
+        <input class="input" placeholder="1-2 人" value="{{serving}}" data-field="serving" bindinput="onFieldInput" />
+      </view>
+      <view class="field half">
+        <text class="label">分类</text>
+        <picker mode="selector" range="{{catNames}}" value="{{catIndex}}" bindchange="onCatChange">
+          <view class="picker">{{catNames[catIndex]}} ▾</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 主厨寄语 -->
+    <view class="field">
+      <text class="label">主厨寄语</text>
+      <textarea class="textarea" placeholder="这道菜的小秘诀或想说的话…" value="{{chef}}" data-field="chef" bindinput="onFieldInput" maxlength="100" auto-height />
+    </view>
+
+    <!-- 食材 -->
+    <view class="field">
+      <view class="label-row">
+        <text class="label">食材</text>
+        <text class="add-btn-inline" bindtap="addIngredient">+ 添加</text>
+      </view>
+      <view class="ing-row" wx:for="{{ingredients}}" wx:key="index">
+        <input class="ing-name" placeholder="食材名" value="{{item.name}}" data-index="{{index}}" bindinput="onIngNameInput" />
+        <input class="ing-amount" placeholder="用量" value="{{item.amount}}" data-index="{{index}}" bindinput="onIngAmountInput" />
+        <view class="row-del" data-index="{{index}}" bindtap="removeIngredient">×</view>
+      </view>
+    </view>
+
+    <!-- 做法 -->
+    <view class="field">
+      <view class="label-row">
+        <text class="label">做法步骤</text>
+        <text class="add-btn-inline" bindtap="addStep">+ 添加</text>
+      </view>
+      <view class="step-row" wx:for="{{steps}}" wx:key="index">
+        <text class="step-index">{{index + 1}}</text>
+        <textarea class="step-textarea" placeholder="这一步怎么做…" value="{{item}}" data-index="{{index}}" bindinput="onStepInput" maxlength="200" auto-height />
+        <view class="row-del" data-index="{{index}}" bindtap="removeStep">×</view>
+      </view>
+    </view>
+
+    <!-- 保存 -->
+    <view class="save-btn {{saving ? 'disabled' : ''}}" bindtap="save">
+      {{saving ? '保存中…' : (mode === 'edit' ? '保存修改' : '添加菜品')}}
+    </view>
   </view>
 </view>

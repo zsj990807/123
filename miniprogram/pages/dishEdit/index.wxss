@@ -1,1 +1,184 @@
-/* 占位样式，P4 实现表单后替换 */
+.form {
+  padding: 28rpx 28rpx 180rpx;
+}
+
+/* ---------- 图片选择 ---------- */
+.img-picker {
+  width: 100%;
+  height: 360rpx;
+  border-radius: 12rpx;
+  background: var(--paper-2);
+  box-shadow: 0 3rpx 12rpx rgba(90, 80, 55, 0.08);
+  overflow: hidden;
+}
+
+.dish-img {
+  width: 100%;
+  height: 100%;
+}
+
+.img-placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.plus {
+  font-size: 72rpx;
+  line-height: 1;
+}
+
+.img-tip {
+  margin-top: 12rpx;
+  font-size: 26rpx;
+}
+
+/* ---------- 字段 ---------- */
+.field {
+  margin-top: 28rpx;
+}
+
+.row {
+  display: flex;
+  gap: 20rpx;
+}
+
+.field.half {
+  flex: 1;
+}
+
+.label {
+  display: block;
+  font-size: 26rpx;
+  color: var(--olive-deep);
+  margin-bottom: 12rpx;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.add-btn-inline {
+  font-size: 26rpx;
+  color: var(--coral);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 18rpx 22rpx;
+  background: var(--paper-2);
+  border: 2rpx solid var(--line);
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+.textarea {
+  min-height: 120rpx;
+  line-height: 1.6;
+}
+
+.picker {
+  padding: 18rpx 22rpx;
+  background: var(--paper-2);
+  border: 2rpx solid var(--line);
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+/* ---------- 食材行 ---------- */
+.ing-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.ing-name {
+  flex: 1.4;
+  padding: 16rpx 18rpx;
+  background: var(--paper-2);
+  border: 2rpx solid var(--line);
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.ing-amount {
+  flex: 1;
+  padding: 16rpx 18rpx;
+  background: var(--paper-2);
+  border: 2rpx solid var(--line);
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.row-del {
+  width: 52rpx;
+  height: 52rpx;
+  line-height: 48rpx;
+  text-align: center;
+  color: var(--muted);
+  font-size: 36rpx;
+}
+
+/* ---------- 步骤行 ---------- */
+.step-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14rpx;
+  margin-bottom: 16rpx;
+}
+
+.step-index {
+  flex-shrink: 0;
+  width: 44rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--coral);
+  color: var(--paper-2);
+  font-size: 24rpx;
+  margin-top: 12rpx;
+}
+
+.step-textarea {
+  flex: 1;
+  min-height: 80rpx;
+  padding: 14rpx 18rpx;
+  background: var(--paper-2);
+  border: 2rpx solid var(--line);
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+/* ---------- 保存按钮 ---------- */
+.save-btn {
+  position: fixed;
+  left: 28rpx;
+  right: 28rpx;
+  bottom: calc(24rpx + env(safe-area-inset-bottom));
+  height: 84rpx;
+  line-height: 84rpx;
+  text-align: center;
+  background: var(--coral);
+  color: var(--paper-2);
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  letter-spacing: 0.16em;
+  box-shadow: 0 6rpx 18rpx rgba(194, 84, 63, 0.3);
+}
+
+.save-btn.disabled {
+  opacity: 0.6;
+}
