@@ -1,1 +1,208 @@
-/* 占位样式，P3 实现点单列表后替换 */
+/* ---------- 页头 ---------- */
+.header {
+  padding: 56rpx 36rpx 8rpx;
+}
+
+.title {
+  display: block;
+  font-size: 52rpx;
+  color: var(--ink);
+  transform: rotate(-0.8deg);
+}
+
+.subtitle {
+  display: block;
+  margin-top: 10rpx;
+  font-size: 22rpx;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  font-family: var(--hand-en);
+}
+
+/* ---------- 空状态 ---------- */
+.empty {
+  padding: 140rpx 48rpx 0;
+  text-align: center;
+}
+
+.olive {
+  font-size: 110rpx;
+  margin-bottom: 24rpx;
+}
+
+.empty-title {
+  display: block;
+  font-size: 40rpx;
+  color: var(--ink);
+}
+
+.empty-desc {
+  display: block;
+  margin-top: 14rpx;
+  font-size: 26rpx;
+  color: var(--muted);
+}
+
+.empty-btn {
+  display: inline-block;
+  margin-top: 48rpx;
+  padding: 16rpx 56rpx;
+  background: var(--coral);
+  color: var(--paper-2);
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  letter-spacing: 0.12em;
+}
+
+/* ---------- 点单列表 ---------- */
+.order-list {
+  padding: 24rpx 28rpx 0;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  background: var(--paper-2);
+  border-radius: 12rpx;
+  box-shadow: 0 3rpx 12rpx rgba(90, 80, 55, 0.08);
+}
+
+.item-img {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 8rpx;
+  flex-shrink: 0;
+  background: #EFE9DA;
+}
+
+.item-body {
+  flex: 1;
+  margin-left: 24rpx;
+  min-width: 0;
+}
+
+.item-name {
+  display: block;
+  font-size: 32rpx;
+  color: var(--ink);
+}
+
+.item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22rpx;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  background: var(--paper);
+  border: 2rpx solid var(--line);
+  border-radius: 40rpx;
+  overflow: hidden;
+}
+
+.stepper-btn {
+  width: 56rpx;
+  height: 56rpx;
+  line-height: 52rpx;
+  text-align: center;
+  font-size: 36rpx;
+  color: var(--ink-2);
+}
+
+.qty {
+  width: 56rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: var(--ink);
+}
+
+.remove {
+  font-size: 24rpx;
+  color: var(--muted);
+  border-bottom: 2rpx dashed var(--muted);
+  padding-bottom: 2rpx;
+}
+
+/* ---------- 统计卡片 ---------- */
+.stats {
+  display: flex;
+  margin: 28rpx 28rpx 0;
+  padding: 28rpx 0;
+  background: var(--paper-2);
+  border-radius: 12rpx;
+  box-shadow: 0 3rpx 12rpx rgba(90, 80, 55, 0.08);
+}
+
+.stat {
+  flex: 1;
+  text-align: center;
+}
+
+.stat-num {
+  display: block;
+  font-size: 42rpx;
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.stat-label {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  color: var(--muted);
+}
+
+/* ---------- 备注 ---------- */
+.note-box {
+  margin: 28rpx 28rpx 180rpx;
+  padding: 24rpx 28rpx;
+  background: var(--paper-2);
+  border-radius: 12rpx;
+  box-shadow: 0 3rpx 12rpx rgba(90, 80, 55, 0.08);
+}
+
+.note-label {
+  display: block;
+  font-size: 28rpx;
+  color: var(--ink);
+  margin-bottom: 12rpx;
+}
+
+.note-input {
+  width: 100%;
+  min-height: 120rpx;
+  font-size: 28rpx;
+  color: var(--ink-2);
+  line-height: 1.6;
+}
+
+/* ---------- 底部提交 ---------- */
+.submit-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18rpx 28rpx calc(18rpx + env(safe-area-inset-bottom));
+  background: var(--paper-2);
+  box-shadow: 0 -4rpx 18rpx rgba(90, 80, 55, 0.12);
+}
+
+.submit-btn {
+  height: 84rpx;
+  line-height: 84rpx;
+  text-align: center;
+  background: var(--coral);
+  color: var(--paper-2);
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  letter-spacing: 0.16em;
+}
+
+.submit-btn.disabled {
+  opacity: 0.6;
+}

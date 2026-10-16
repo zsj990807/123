@@ -1,6 +1,70 @@
 <view class="page">
-  <view class="stub">
-    <text class="stub-title">我的点单</text>
-    <text class="stub-desc">点单列表、份数增减、统计与提交功能将在 P3 实现</text>
+  <view class="header">
+    <text class="title">我的点单</text>
+    <text class="subtitle">Good Food · Brings Us Closer</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{list.length === 0}}">
+    <view class="olive">🍽️</view>
+    <text class="empty-title">还没有点菜</text>
+    <text class="empty-desc">去菜单里挑几道想吃的吧</text>
+    <view class="empty-btn" bindtap="goMenu">去看菜单</view>
+  </view>
+
+  <!-- 点单列表 -->
+  <block wx:else>
+    <view class="order-list">
+      <view class="order-item" wx:for="{{list}}" wx:key="id">
+        <image class="item-img" src="{{item.img}}" mode="aspectFill" />
+        <view class="item-body">
+          <text class="item-name">{{item.name}}</text>
+          <view class="item-bottom">
+            <view class="stepper">
+              <view class="stepper-btn" data-id="{{item.id}}" bindtap="decQty">−</view>
+              <text class="qty">{{item.qty}}</text>
+              <view class="stepper-btn" data-id="{{item.id}}" bindtap="incQty">+</view>
+            </view>
+            <view class="remove" data-id="{{item.id}}" bindtap="remove">移除</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 统计卡片 -->
+    <view class="stats">
+      <view class="stat">
+        <text class="stat-num">{{summary.dishCount}}</text>
+        <text class="stat-label">道菜</text>
+      </view>
+      <view class="stat">
+        <text class="stat-num">{{summary.totalQty}}</text>
+        <text class="stat-label">份</text>
+      </view>
+      <view class="stat">
+        <text class="stat-num">{{summary.estMinutes || '—'}}</text>
+        <text class="stat-label">分钟出餐</text>
+      </view>
+    </view>
+
+    <!-- 备注 -->
+    <view class="note-box">
+      <text class="note-label">给主厨的话</text>
+      <textarea
+        class="note-input"
+        placeholder="口味偏好、忌口、备注…"
+        value="{{note}}"
+        bindinput="onNoteInput"
+        maxlength="200"
+        auto-height
+      />
+    </view>
+  </block>
+
+  <!-- 底部提交按钮 -->
+  <view class="submit-bar" wx:if="{{list.length > 0}}">
+    <view class="submit-btn {{submitting ? 'disabled' : ''}}" bindtap="submitOrder">
+      {{submitting ? '提交中…' : '提交给主厨'}}
+    </view>
   </view>
 </view>
