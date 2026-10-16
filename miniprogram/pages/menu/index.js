@@ -1,15 +1,23 @@
-const { CATS, listByCat } = require('../../utils/dishes')
+const repo = require('../../utils/repo')
+const { CATS } = require('../../utils/dishes')
 const { syncTabBar } = require('../../utils/ui')
 
 Page({
   data: {
     cats: CATS,
     current: 0,
-    list: []
+    list: [],
+    loading: true
   },
 
-  onLoad() {
-    this.loadCat(0)
+  async onLoad() {
+    // 首次进入把内置菜品写入云端；云环境不可用时会直接跳过
+    try {
+      await repo.ensureSeeded()
+    } catch (e) {
+      console.warn('[menu] 初始化内置菜品失败', e)
+    }
+    await this.loadCat(0)
   },
 
   onShow() {
@@ -17,13 +25,25 @@ Page({
     syncTabBar(this, 0)
   },
 
-  loadCat(index) {
-    const list = listByCat(CATS[index].key).map((dish, i) => {
+  async loadCat(index) {
+    const key = CATS[index].key
+    this.setData({ current: index, loading: true })
+
+    let list = []
+    try {
+      list = await repo.fetchDishes(key)
+    } catch (e) {
+      console.warn('[menu] 云端读取失败，降级为内置数据', e)
+      list = repo.localDishes(key)
+      wx.showToast({ title: '云端读取失败，已用内置菜单', icon: 'none' })
+    }
+
+    list = list.map((dish, i) => {
       const item = Object.assign({}, dish)
       item.tilt = i % 2 ? 'tilt-r' : 'tilt-l'
       return item
     })
-    this.setData({ current: index, list })
+    this.setData({ list, loading: false })
   },
 
   selectCat(e) {
@@ -35,7 +55,7 @@ Page({
   openDetail(e) {
     const index = Number(e.currentTarget.dataset.index)
     const dish = this.data.list[index]
-    if (!dish) return
+    if (!dish || !dish.id) return
     wx.navigateTo({ url: '/pages/detail/index?id=' + dish.id })
   }
 })

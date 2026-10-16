@@ -21,8 +21,9 @@
     >{{item.name}}</view>
   </view>
 
-  <!-- 菜品列表：拍立得卡片 -->
-  <view class="list">
+  <!-- 加载中 / 菜品列表 -->
+  <view wx:if="{{loading}}" class="loading">正在翻菜单…</view>
+  <view wx:else class="list">
     <view
       wx:for="{{list}}"
       wx:key="id"
@@ -41,5 +42,7 @@
         </view>
       </view>
     </view>
+
+    <view wx:if="{{list.length === 0}}" class="empty">这个分类还没有菜</view>
   </view>
 </view>

@@ -1,5 +1,11 @@
 <view class="page">
-  <block wx:if="{{dish}}">
+  <block wx:if="{{loading}}">
+    <view class="stub">
+      <text class="stub-title">正在端菜…</text>
+    </view>
+  </block>
+
+  <block wx:elif="{{dish}}">
     <view class="detail-img polaroid">
       <view class="tape"></view>
       <image class="big" src="{{dish.img}}" mode="aspectFill" />

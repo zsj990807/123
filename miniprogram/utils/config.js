@@ -9,5 +9,5 @@
  * 便于在没有云环境（或未登录 AppID）时先跑通 UI。
  */
 module.exports = {
-  CLOUD_ENV: ''
+  CLOUD_ENV: 'cloud1-d5g1b0m9b4ca3c7d5'
 }

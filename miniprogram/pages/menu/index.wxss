@@ -104,6 +104,14 @@
   padding: 4rpx 28rpx 40rpx;
 }
 
+.loading,
+.empty {
+  padding: 90rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+  color: var(--muted);
+}
+
 .card {
   margin-bottom: 44rpx;
 }

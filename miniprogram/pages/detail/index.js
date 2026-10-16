@@ -1,15 +1,18 @@
-const { findById } = require('../../utils/dishes')
+const repo = require('../../utils/repo')
 
 Page({
   data: {
     id: '',
-    dish: null
+    dish: null,
+    loading: true
   },
 
-  onLoad(query) {
+  async onLoad(query) {
     const id = query.id || ''
-    const dish = findById(id)
-    this.setData({ id, dish })
+    this.setData({ id })
+
+    const dish = await repo.fetchDish(id)
+    this.setData({ dish, loading: false })
     if (dish) {
       wx.setNavigationBarTitle({ title: dish.name })
     }
